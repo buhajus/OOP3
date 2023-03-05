@@ -5,6 +5,7 @@ import java.text.NumberFormat;
 
 public class ZmogusImpl implements Zmogus {
 
+    NumberFormat numberFormat = new DecimalFormat("0.00");
 
     private String lytis;
     private String asmensKodas;
@@ -16,6 +17,11 @@ public class ZmogusImpl implements Zmogus {
     private double ugis;
     private double kmi;
 
+    /**
+     * Sukuriamas objekto masyvas
+     *
+     * @return Grąžinami masyvo objektai
+     */
     public ZmogusImpl[] sarasasZmones() {
         ZmogusImpl zm1 = new ZmogusImpl("vyras", "3863251254", "Tomas", "Katinas", "juoda", 36, 75, 1.85);
         ZmogusImpl zm2 = new ZmogusImpl("moteris", "3863251254", "Laima", "Andrikiene", "ruda", 66, 75, 1.65);
@@ -26,12 +32,7 @@ public class ZmogusImpl implements Zmogus {
         ZmogusImpl[] zmones = {zm1, zm2, zm3, zm4, zm5, zm6};
 
         return zmones;
-
     }
-
-
-    NumberFormat numberFormat = new DecimalFormat("0.00");
-
 
     public void setLytis(String lytis) {
         this.lytis = lytis;
@@ -72,7 +73,6 @@ public class ZmogusImpl implements Zmogus {
     public int getAmzius() {
         return amzius;
     }
-
 
     public double getSvoris() {
         return svoris;
@@ -116,7 +116,18 @@ public class ZmogusImpl implements Zmogus {
                 '}';
     }
 
-
+    /**
+     * Sukuriamas konstruktorius su parametrais
+     *
+     * @param lytis
+     * @param asmensKodas
+     * @param vardas
+     * @param pavarde
+     * @param plaukuSpalva
+     * @param amzius
+     * @param svoris
+     * @param ugis
+     */
     public ZmogusImpl(String lytis, String asmensKodas, String vardas, String pavarde, String plaukuSpalva, int amzius, double svoris, double ugis) {
         this.lytis = lytis;
         this.asmensKodas = asmensKodas;
@@ -128,26 +139,40 @@ public class ZmogusImpl implements Zmogus {
         this.ugis = ugis;
     }
 
+    /**
+     * Sukuriamas konstruktorius be parametrų
+     */
     public ZmogusImpl() {
 
     }
 
+    /**
+     * Metodas skaiciuoja KMI
+     *
+     * @return Grąžinamas rezultatas
+     */
     public double skaiciuotiKmi() {
-        double kmi = 0;
         kmi = getSvoris() / (getUgis() * getUgis());
 
         return kmi;
     }
 
+    /**
+     * Metodas išrenka žmones, kurių plaukų spalva juoda.
+     */
     public void gautiPlanukuSpalva() {
         for (ZmogusImpl zm : sarasasZmones()) {
             if (zm.getPlaukuSpalva().equals("juoda")) {
                 System.out.println("Juodus plaukus turi: " + zm.getVardas());
             }
         }
-
     }
 
+    /**
+     * Metodas randa dižiausio svorio indeksą
+     *
+     * @return Grąžinamas indekso numeris masyve
+     */
     public int rastiDiziausioSvorioIndeksa() {
         double maxSvoris = -9999;
         int pozicija = 0;
@@ -162,6 +187,11 @@ public class ZmogusImpl implements Zmogus {
         return pozicija;
     }
 
+    /**
+     * Metodas randa mažiausio svorio indeksą
+     *
+     * @return Grąžinamas indekso numeris masyve
+     */
     public int rastiMaziausioSvorioIndeksa() {
         double minSvoris = 999;
         int pozicija = 0;
@@ -176,7 +206,12 @@ public class ZmogusImpl implements Zmogus {
         return pozicija;
     }
 
-    public double rastiDidziausiSvori () {
+    /**
+     * Metodas randa dižiausią svorį
+     *
+     * @return Grąžinamas didžiausias svoris masyve
+     */
+    public double rastiDidziausiSvori() {
         double maxSvoris = -9999;
 
         for (int i = 0; i < sarasasZmones().length; i++) {
@@ -188,6 +223,11 @@ public class ZmogusImpl implements Zmogus {
         return maxSvoris;
     }
 
+    /**
+     * Metodas randa mažiausią svorį
+     *
+     * @return Grąžinamas mažiausias svoris masyve
+     */
     public double rastiMaziausiaSvori() {
         double minSvoris = 999;
 
@@ -200,6 +240,9 @@ public class ZmogusImpl implements Zmogus {
         return minSvoris;
     }
 
+    /**
+     * Metodas atvaizduoja visus svorius
+     */
     public void svorioSarasas() {
 
         for (ZmogusImpl zm : sarasasZmones()) {
@@ -207,14 +250,25 @@ public class ZmogusImpl implements Zmogus {
         }
     }
 
-
+    /**
+     * Metodas spausdina masyvą
+     *
+     * @param masyvas nurodomas masyvas
+     */
     public void spausdintiMasyva(ZmogusImpl masyvas[]) {
         for (int i = 0; i < masyvas.length; i++) {
             System.out.println(masyvas[i] + ",");
         }
     }
 
-
+    /**
+     * Metodas sukuria naują masyvą su sukeistais svoriais: dižiausias su mažiausiu
+     *
+     * @param array Nurodomas masyvas
+     * @param max   Nurodomas didžiausio svorio indesas masyve
+     * @param min   Nurodomas mažiausio svorio indesas masyve
+     * @return Grąžinamas naujas masyvas su sukeistais svoriais
+     */
     public ZmogusImpl[] sukeistiMaxMin(ZmogusImpl[] array, int max, int min) {
         ZmogusImpl masyvas[] = new ZmogusImpl[sarasasZmones().length];
 
